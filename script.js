@@ -39,28 +39,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     sections.forEach(function (section) { observer.observe(section); });
 
-    // ---------- 3. Contact form ----------
-    // There is no server, so the form opens the visitor's email app with the message filled in.
-    var form = document.getElementById('contactForm');
-    var note = document.getElementById('formNote');
+// ---------- 3. Contact form ----------
+var form = document.getElementById('contactForm');
+var note = document.getElementById('formNote');
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault(); // stop the page from reloading
+form.addEventListener('submit', async function (event) {
+    event.preventDefault();
 
-        var name = document.getElementById('name').value.trim();
-        var email = document.getElementById('email').value.trim();
-        var message = document.getElementById('message').value.trim();
+    note.textContent = 'Sending message...';
 
-        var subject = encodeURIComponent('Portfolio message from ' + name);
-        var body = encodeURIComponent(message + '\n\nFrom: ' + name + ' (' + email + ')');
+    try {
+        var response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
 
-        // Opens the email app addressed to you.
-        window.location.href = 'mailto:krishnasaxena4378@gmail.com?subject=' + subject + '&body=' + body;
-
-        note.textContent = 'Opening your email app...';
-        form.reset();
-    });
-
-    // ---------- 4. Footer year updates itself ----------
-    document.getElementById('year').textContent = new Date().getFullYear();
+        if (response.ok) {
+            note.textContent = 'Message sent successfully!';
+            form.reset();
+        } else {
+            note.textContent = 'Message could not be sent. Please try again.';
+        }
+    } catch (error) {
+        note.textContent = 'Network error. Please try again.';
+    }
 });
+
+// ---------- 4. Footer year updates itself ----------
+document.getElementById('year').textContent = new Date().getFullYear();
