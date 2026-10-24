@@ -39,34 +39,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     sections.forEach(function (section) { observer.observe(section); });
 
-// ---------- 3. Contact form ----------
-var form = document.getElementById('contactForm');
-var note = document.getElementById('formNote');
+    // ---------- 3. Contact form (sent with Formspree) ----------
+    var form = document.getElementById('contactForm');
+    var note = document.getElementById('formNote');
 
-form.addEventListener('submit', async function (event) {
-    event.preventDefault();
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault(); // stop the page from reloading
 
-    note.textContent = 'Sending message...';
+        note.textContent = 'Sending message...';
 
-    try {
-        var response = await fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: {
-                'Accept': 'application/json'
+        try {
+            // Send the form data to the address in the form's action="..." attribute.
+            var response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                note.textContent = 'Message sent successfully!';
+                form.reset();
+            } else {
+                note.textContent = 'Message could not be sent. Please try again.';
             }
-        });
-
-        if (response.ok) {
-            note.textContent = 'Message sent successfully!';
-            form.reset();
-        } else {
-            note.textContent = 'Message could not be sent. Please try again.';
+        } catch (error) {
+            note.textContent = 'Network error. Please try again.';
         }
-    } catch (error) {
-        note.textContent = 'Network error. Please try again.';
-    }
-});
+    });
 
-// ---------- 4. Footer year updates itself ----------
-document.getElementById('year').textContent = new Date().getFullYear();
+    // ---------- 4. Footer year updates itself ----------
+    document.getElementById('year').textContent = new Date().getFullYear();
+});
