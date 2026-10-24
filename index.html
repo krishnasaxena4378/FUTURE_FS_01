@@ -271,22 +271,49 @@
                     </div>
 
                     <div class="card">
-                       <form id="contactForm" action="https://formspree.io/f/mqppkoqe" method="POST">
-                            <div class="input-group">
-                                <label for="name" class="technical-sm">Name</label>
-                                <input type="text" id="name" class="input-field" required>
-                            </div>
-                            <div class="input-group">
-                                <label for="email" class="technical-sm">Email</label>
-                                <input type="email" id="email" class="input-field" required>
-                            </div>
-                            <div class="input-group">
-                                <label for="message" class="technical-sm">Message</label>
-                                <textarea id="message" class="input-field" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary label-caps full-width">Send Message</button>
-                            <p class="technical-sm mt-sm" id="formNote"></p>
-                        </form>
+                    
+<form id="contactForm" action="https://formspree.io/f/mqppkoqe" method="POST">
+
+    <div class="input-group">
+        <label for="name" class="technical-sm">Name</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            class="input-field"
+            required
+      >
+    </div>
+
+    <div class="input-group">
+        <label for="email" class="technical-sm">Email</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            class="input-field"
+            required
+        >
+    </div>
+
+    <div class="input-group">
+        <label for="message" class="technical-sm">Message</label>
+        <textarea
+            id="message"
+            name="message"
+            class="input-field"
+            rows="5"
+            required
+        ></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary label-caps full-width">
+        Send Message
+    </button>
+
+    <p class="technical-sm mt-sm" id="formNote"></p>
+
+</form>
                     </div>
                 </div>
             </div>
